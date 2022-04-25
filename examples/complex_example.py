@@ -215,8 +215,7 @@ class App(customtkinter.CTk):
     def analyzeData_event(self):
         print("analyzeData pressed")
 
-        x = self.frame_info.grid
-        x.
+
         # x.pack_forget()
         style = ttk.Style(self.frame_info)
         style.configure('lefttab.TNotebook', tabposition='wn')
