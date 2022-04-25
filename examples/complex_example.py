@@ -116,14 +116,19 @@ class App(customtkinter.CTk):
         # ============ frame_right ============
 
         self.frame_right.rowconfigure(0, weight=200)
-        # self.frame_right.rowconfigure(3, weight=1)
+        # self.frame_right.rowconfigure(1, weight=1)
         self.frame_right.columnconfigure(0, weight=1)
 
         self.frame_info = customtkinter.CTkFrame(master=self.frame_right,
                                                  width=380,
                                                  height=200)
-        self.frame_info.grid(row=0, column=0, columnspan=3, pady=20, padx=20, sticky="wens")
-
+        self.frame_info.grid(row=0, column=0,  columnspan=3, pady=20, padx=20, sticky="wens")
+        #try to build place for all the parts
+        self.frame_info.columnconfigure(0, weight=200)
+        self.frame_info.columnconfigure(1, weight=200)
+        self.frame_info.columnconfigure(2, weight=200)
+        self.frame_info.rowconfigure(0, weight=200)
+        self.frame_info.rowconfigure(1, weight=200)
         # ============ frame_right -> frame_info ============
 
 
@@ -205,7 +210,31 @@ class App(customtkinter.CTk):
         print("trainModel pressed")
 
     def loadEEGDataSet_event(self):
+        self.EEGData = customtkinter.CTkFrame(master=self.frame_info,
+                               width=180,
+                               corner_radius=0)
         print("loadEEGDataSet pressed")
+        self.lbl = tkinter.Label(self.frame_info, text="List of Programming Languages")
+
+        self.lbl.grid(row=2, column=2, columnspan=1, pady=10, padx=20, sticky="we")
+        self.listbox = tkinter.Listbox(self.frame_info)
+        self.listbox.grid(row=1, column=1, columnspan=1, pady=10, padx=20, sticky="we")
+        self.listbox.insert(1, "Python")
+
+        self.listbox.insert(2, "Java")
+
+        self.listbox.insert(3, "C")
+
+        self.listbox.insert(4, "C++")
+
+        self.lbl.pack()
+        self.listbox.pack()
+        self.inputtxt = tkinter.Text(self.frame_info,
+                           height=1,
+                           width=20)
+        self.inputtxt.grid(row=0, column=0, columnspan=1, pady=10, padx=20, sticky="we")
+
+        self.inputtxt.pack()
 
     def runModel_event(self):
         print("runModel pressed")
@@ -215,8 +244,13 @@ class App(customtkinter.CTk):
     def analyzeData_event(self):
         print("analyzeData pressed")
 
+        # self.frame_info.winfo_children
+        children_widgets = self.frame_info.winfo_children()
+        for child_widget in children_widgets:
+            y = child_widget.winfo_class() == 'TNotebook'
+            if child_widget.winfo_class() == 'TNotebook':#delete the old one
+                child_widget.destroy()
 
-        # x.pack_forget()
         style = ttk.Style(self.frame_info)
         style.configure('lefttab.TNotebook', tabposition='wn')
 
